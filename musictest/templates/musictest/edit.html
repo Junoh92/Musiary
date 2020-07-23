@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Musiary-Edit</title>
+
+    </head>
+    <body>
+        <h1> Edit post </h1>
+            
+
+        <h2> User </h2>
+        {{post.user}}
+        
+        <h2> Photo </h2>
+        {% if post.image %}
+            <div>
+                <img src = "{{ post.image.url}}" ></img>
+            </div>
+        {% endif %}
+        <form action="{% url 'musictest:update' post.id %}" method ="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+        
+        <div class="form-group">
+            <label for ='image'> Photo </label>
+            <input type ="file" class="form-control-file" id="image" name="image">
+        </div>
+        
+        <h2> Music </h2>
+        <input type="text", name="music",  value="{{post.music}}"/>
+        
+        <h2> Singer </h2>
+        <input type="text", name="singer" value="{{post.singer}}"/>
+        
+        <h2> Tag </h2>
+        <textarea cols=40 rows=10 name="tag">{{post.tag}}</textarea>
+        
+        <h2> Body </h2>
+        <textarea cols=40 rows=10 name="body">{{post.body}}</textarea>
+        
+        <br>
+        <input type="submit" value="Edit" />
+        </form>
+   
+        <a href = "{% url 'musictest:index' %}"> List </a>
+    </body>
+</html>

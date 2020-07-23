@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'posts/style.css' %}" type="text/css" />
+{% endblock %} 
+
+{% block content %}
+    <div class = "container">
+        <h1> New post </h1>
+            
+            <form action="{% url 'musictest:create' %}" method ="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+        
+        <div class="form-group">
+            <label for ='image'> Photo </label>
+            <input type = 'file' class='form-control-file' id='image' name='image'>
+        </div>
+        
+        
+        <div class='form-group'>
+            <label for ='music'> Music </label>
+            <input type="text", name="music"/>
+        </div>
+        
+        <div class='form-group'>
+            <label for="singer"> Singer </label>
+            <input type="text", name="singer"/>
+        </div>
+        
+        <div class='form-group'>
+            <label for ='tag'> Tag </label>
+            <textarea class="form-control" cols=40 rows=10 name="tag"></textarea>
+        </div>
+        
+        <div class='form-group'>
+            <label for ="Body"> Memo </label>
+            <textarea class="form-control" cols=40 rows=10 name="body"></textarea>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary mb-4"> Create </button>
+        </form>
+       
+        <a href = "{% url 'musictest:index' %}"> List </a>
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Musiary-delete</title>
+        <link href="https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'posts/style.css' %}" type="text/css" />
+    </head>
+    <body>
+        <form action="{% url 'musictest:realdelete' post.id %}" method ="POST">
+        {% csrf_token %}
+        <h1> Delete </h1>
+        <br>
+        <p> {{post.user}}가 작성하신 게시물을 삭제하시겠습니까?</p>
+        <input type="submit" value="Yes" />
+        </form>
+        <a href = "{% url 'musictest:detail' post.id %} "> No </a>
+    </body>
+</html>

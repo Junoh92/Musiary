@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'posts/style.css' %}" type="text/css" />
+{% endblock %} 
+
+{% block content %}
+
+    <h1> Post Detail</h1>
+    {% if post %}
+    <h2> Author </h2>
+    <p> {{ post.user }}</p>
+    
+    {% if post.image %}
+    <div>
+        <h2>Photo</h2>
+        <img src="{{ post.image.url }}"></img>
+    </div>
+    {% endif %}
+    
+    <h2> Music </h2>
+    <p> {{ post.music}} </p>
+    
+    <h2> Singer </h2>
+    <p>{{ post.singer }}</p>
+    
+    <h2> Tag </h2>
+    <p>{{post.tag}}</p>
+    <h2> Body </h2>
+    <p>{{post.body}}</p>
+    <h2> Created_at </h2>
+    <p>{{post.created_at}}</p>
+    {% else %}
+    <p>No post</p>
+    {% endif %}
+    
+    <div>
+        좋아요 수 : {{ post.liked_users.count }}
+    </div>
+    {% if user.is_authenticated %}
+    {% if user in post.liked_users.all %}
+        <form action = "{% url 'musictest:like' post.id %}" method = "POST">
+            {% csrf_token %}
+            <button type = "submit" class = "btn btn-secondary">Like!</button>
+        </form>
+    {% else %}
+        <form action = "{% url 'musictest:like' post.id %}" method = "POST">
+            {% csrf_token %}
+            <button type = "submit" class = "btn btn-primary">Like!</button>
+        </form>
+    {% endif %}
+    {% endif %}
+   
+        <a href="{% url 'musictest:index' %}">list</a>
+    {% if user == post.user %}
+    <a href="{% url 'musictest:edit' post.id %}">Edit</a>
+    <a href="{% url 'musictest:delete' post.id %}">Delete</a>
+    {% endif %}
+ 
+{% endblock %}
