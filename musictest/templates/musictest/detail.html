@@ -8,7 +8,7 @@
 
 {% block content %}
 
-    <h1> Post Detail</h1>
+    <h1></h1>
     {% if post %}
     <h2> Author </h2>
     <p> {{ post.user }}</p>
@@ -19,12 +19,26 @@
         <img src="{{ post.image.url }}"></img>
     </div>
     {% endif %}
+    <h2> Albumart </h2>
+    <img src = "{{post.albumart_link}}" />
     
     <h2> Music </h2>
-    <p> {{ post.music}} </p>
+            <div>
+                <audio controls="controls">
+                  <source src="{{ post.song.url }}" type="audio/mpeg"  autostart="true" />
+                Your browser does not support the audio element.
+                </audio>
+            </div>
+    <p> {{ post.music_official}} </p>
     
     <h2> Singer </h2>
-    <p>{{ post.singer }}</p>
+    <p>{{ post.artist_official }}</p>
+    
+    <h2> Album </h2>
+    <p>{{ post.album_official }}</p>
+    
+    <h2> Lyric </h2>
+    <p>{{ post.lyric_official }}</p>
     
     <h2> Tag </h2>
     <p>{{post.tag}}</p>

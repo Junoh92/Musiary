@@ -13,6 +13,12 @@ class Post(models.Model):
     body = models.TextField()
     created_at = models.DateTimeField()
     liked_users = models.ManyToManyField(User, related_name='liked_posts')
+    song = models.FileField(upload_to='Musiary/', null=True)
+    music_official = models.CharField(max_length=50,null=True)
+    artist_official = models.CharField(max_length=50,null=True)
+    album_official = models.CharField(max_length=50,null=True)
+    albumart_link = models.URLField()
+    lyric_official = models.TextField() 
     
     def __str__(self):
         if self.user:

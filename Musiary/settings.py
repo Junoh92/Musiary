@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'Musiary.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Musiary',
+        'USER': 'Musiary',
+        'PASSWORD': 'wnstjr12$',
+        'HOST': 'musiary.c7bipsf1ih39.us-east-1.rds.amazonaws.com',
+        'PORT': 5432,
     }
 }
 
@@ -124,5 +128,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 
 #settings for Media
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
+
+
+SONG_ROOT = os.path.join(BASE_DIR, 'songs/')
+SONG_URL = '/songs/'

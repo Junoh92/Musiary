@@ -13,6 +13,13 @@
         <h2> User </h2>
         {{post.user}}
         
+        <h2> Music Upload </h2>
+        {% if post.song %}
+            <div>
+                <audio src="{{ post.song.url }}" controls> <embed src= "{{ post.song.url }}" width="300" height="90" loop="false" autostart="true"> </audio>
+            </div>
+        {% endif %}
+        
         <h2> Photo </h2>
         {% if post.image %}
             <div>
