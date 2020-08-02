@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'posts/style.css' %}" type="text/css" />
+{% endblock %} 
+
+{% block content %}
+<h1> What Are You Thinking? </h1>
+<h2> Write Your Musiary Tag</h2>
+<div>
+    <form  action="{% url 'musictest:new9_write' %}" method ="GET">
+        <input type="text" name="tag" placeholder="Ex) #기쁠때 #피곤할때 #여행갈때"/>
+        <!--밑에는 계속 정보 이어갑니다..-->
+        <input type = 'hidden'  name='title' value ="{{title}}">
+        <input type = 'hidden'  name='artist_official' value ="{{artist_official}}">
+        <input type = 'hidden' name='music_official' value="{{music_official}}">
+        <input type = 'hidden'  name='album_official' value ="{{album_official}}">
+        <input type = 'hidden'  name='info_official' value ="{{info_official}}">
+        <button type="submit" class="btn btn-primary mb-4"> Next </button>
+    </form>
+</div>
+<br>
+
+{% endblock %}

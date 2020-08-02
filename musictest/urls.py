@@ -19,7 +19,11 @@ urlpatterns = [
     path('search_result/', views.search_D, name='new4_search'),
     path('downloading/', views.search_E_A, name='new5_search'),
     path('downloaded/', views.search_F, name="new6_search"),
-    path('write/', views.write_A, name="new7_write"),
+    path('write_title/', views.write_A, name="new7_write"),
+    path('write_tag/', views.write_B, name="new8_write"),
+    path('write_body/', views.write_C, name="new9_write"),
+    path('create_musiary/', views.create_musiary, name="create_musiary"),
+    
     # path('search_result_b/', views.search_E_B, name='new5_searchB'),
     # path('search_result_c/', views.search_E_C, name='new5_searchC'),
     # path('test/', views.test, name ='test'),

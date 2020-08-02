@@ -25,27 +25,28 @@
     <h2> Music </h2>
             <div>
                 <audio controls="controls">
-                  <source src="{{ post.song.url }}" type="audio/mpeg"  autostart="true" />
+                  <source src="{{ post.song_official.url }}" type="audio/mpeg"  autostart="true" />
                 Your browser does not support the audio element.
                 </audio>
             </div>
     <p> {{ post.music_official}} </p>
     
-    <h2> Singer </h2>
+    <h2> Artist </h2>
     <p>{{ post.artist_official }}</p>
     
     <h2> Album </h2>
     <p>{{ post.album_official }}</p>
     
-    <h2> Lyric </h2>
-    <p>{{ post.lyric_official }}</p>
-    
+    <h1> Title </h1>
+    <h2>{{post.title}}</h2> <br><br><br>
     <h2> Tag </h2>
-    <p>{{post.tag}}</p>
+    <p>{{post.tag}}</p> <br><br><br>
     <h2> Body </h2>
-    <p>{{post.body}}</p>
-    <h2> Created_at </h2>
-    <p>{{post.created_at}}</p>
+    <p>{{post.body}}</p> <br><br><br>
+    <h2> Lyric </h2>
+    <p>{{ post.lyric_official }}</p> <br><br><br>
+    <h2> Created_at </h2> 
+    <p>{{post.created_at}}</p> <br><br><br>
     {% else %}
     <p>No post</p>
     {% endif %}

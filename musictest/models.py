@@ -6,19 +6,18 @@ from django.contrib.auth.models import User
 class Post(models.Model):
     # author = models.CharField(max_length=20)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
-    music = models.CharField(max_length=20)
-    image = models.ImageField(upload_to='musictest', null=True)
-    singer = models.CharField(max_length=20)
-    tag = models.TextField()
+    artist_official = models.CharField(max_length=50,null=True)
+    music_official = models.CharField(max_length=50,null=True)
+    album_official = models.CharField(max_length=50,null=True)
+    lyric_official = models.TextField() 
+    albumart_official = models.URLField
+    song_official = models.FileField(null=True)
+    title = models.CharField(max_length=200,null=True)
+    tag = models.CharField(max_length=200,null=True)
     body = models.TextField()
+    image = models.ImageField(upload_to='musictest', null=True)
     created_at = models.DateTimeField()
     liked_users = models.ManyToManyField(User, related_name='liked_posts')
-    song = models.FileField(upload_to='Musiary/', null=True)
-    music_official = models.CharField(max_length=50,null=True)
-    artist_official = models.CharField(max_length=50,null=True)
-    album_official = models.CharField(max_length=50,null=True)
-    albumart_link = models.URLField()
-    lyric_official = models.TextField() 
     
     def __str__(self):
         if self.user:
