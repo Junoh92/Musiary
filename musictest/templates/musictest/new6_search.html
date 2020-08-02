@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'posts/style.css' %}" type="text/css" />
+{% endblock %} 
+
+{% block content %}
+<h1> downloaded </h1>
+<div>
+    <audio controls="controls">
+      <source src="{{song_official.url }}" type="audio/mpeg"  autostart="true" />
+    Your browser does not support the audio element.
+    </audio>
+</div>
+{% if albumart_official %}
+<img src="{{albumart_official}}" />
+{% endif %}
+<div>
+    <h2>{{artist_official}}</h2>
+</div>
+<div>
+    <h2>{{music_official}}</h2>
+</div>
+{% if lyric_official %}
+<div>
+    <p>{{lyric_official}}</p>   
+</div>
+{% endif %}
+<br>
+<br>
+<br>
+<h3>찾으시는 곡이 맞나요?</h3>
+    <form action="{% url 'musictest:new7_write' %}" method ="GET">
+        <input type = 'hidden'  name='artist_official' value ="{{artist_official}}">
+        <input type = 'hidden' name='music_official' value="{{music_official}}">
+        <input type = 'hidden'  name='album_official' value ="{{album_official}}">
+        <input type = 'hidden'  name='info_official' value ="{{info_official}}">
+        <input type = 'hidden'  name='lyric_official' value = "{{lyric_official}}">
+        <input type = 'hidden' name='albumart_official' value = "{{albumart_official}}">
+        <button type="submit" class="btn btn-primary mb-4"> 넵 </button>
+    </form>
+<br> <br>
+    <form action="{% url 'musictest:new1_search' %}">
+        <button type="submit" class="btn btn-primary mb-4"> 아니오 </button>
+    </form>
+{% endblock %}

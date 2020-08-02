@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'posts/style.css' %}" type="text/css" />
+{% endblock %} 
+
+{% block content %}
+
+<div class = "container">
+    
+<h1>Posts</h1>
+
+<h2> 무슨 노래가 생각나세요? </h2>
+
+<form action="{% url 'musictest:new2_search' %}" method ="GET">
+    <div class="form-group">
+        <input type = 'text'  name='music1'>
+    </div>
+<br>
+<button type="submit" class="btn btn-primary mb-4"> Next </button>
+</form>
+
+</div>
+
+{% endblock %}

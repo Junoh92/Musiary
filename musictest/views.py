@@ -14,6 +14,7 @@ from spotdl.command_line.core import Spotdl
 import os
 from django.core.files import File
 
+from mutagen import File
 
 def index(request):
     print (' api  호출호출')
@@ -204,3 +205,272 @@ def like(request, post_id):
         except Post.DoesNotExist:
             pass
     return redirect('musictest:index')
+
+@login_required
+def search_A(request):
+    return render(request, 'musictest/new1_search.html')
+    
+@login_required
+def search_B(request):
+    music1 = request.GET['music1']
+    print(music1)
+    context={'music1': music1}
+    return render(request, 'musictest/new2_search.html', context)
+    
+@login_required
+def search_C(request):
+    music2 = request.GET['music2']
+    singer1 = request.GET['singer1']
+    print(music2)
+    print(singer1)
+    context={'music2' : music2, 'singer1' : singer1 }
+    return render(request, 'musictest/new3_search.html', context)
+    
+def search_D(request):
+    music3 = request.GET['music3']
+    singer2 = request.GET['singer2']
+    print(music3)
+    print(singer2)
+###############################################정보 다 따오자 
+    # Linux 서버에서는 GUI Browser를 구동할 수 없기 때문에 Headless Mode로 사용해야 한다.
+    chrome_options = webdriver.ChromeOptions()
+    # 크롬 헤드리스 모드 사용 위해 disable-gpu setting
+    chrome_options.add_argument('--disable-gpu')
+    # 크롬 헤드리스 모드 사용 위해 headless setting
+    chrome_options.add_argument('--headless')
+    
+    
+    #벅스 내에서 노래 검색
+    driver = webdriver.Chrome(chrome_options=chrome_options)
+    driver.implicitly_wait(3)
+    driver.get(f'https://music.bugs.co.kr/search/integrated?q={singer2} {music3}')
+    print('벅스 검색 성공')
+##################
+    #검색결과 1위 따오기 
+    try: 
+        search_music1_link = driver.find_element_by_css_selector('#DEFAULT0 > table > tbody > tr:nth-child(1) > th > p > a')
+        search_music1 = search_music1_link.text
+        print(search_music1)
+    except:
+        search_music1 = '곡 정보가 없습니다.'
+        search_album1 = False
+        search_artist1 = False
+        search_miniart1 = False
+        search_music2 = False
+        search_album2 = False
+        search_artist2 = False
+        search_miniart2 = False
+        info2 = False
+        search_music3 = False
+        search_album3 = False
+        search_artist3 = False
+        search_miniart3 = False
+        info3 = False   
+        driver.quit()
+    #앨범 이름 따오기
+    try:
+        search_album1_link = driver.find_element_by_css_selector('#DEFAULT0 > table > tbody > tr > td:nth-child(8) > a')
+        search_album1 = search_album1_link.text
+        print(search_album1)
+    except:
+        search_album1 = '앨범 정보가 없습니다'
+    #아티스트 이름 따오기
+    try: 
+        search_artist1_link = driver.find_element_by_css_selector('#DEFAULT0 > table > tbody > tr > td:nth-child(7) > p > a')
+        search_artist1 = search_artist1_link.text
+        print(search_artist1)
+    except:
+        search_artist1 = '아티스트 정보가 없습니다'
+    #미리보기 앨범아트 따오기
+    try:
+        search_miniart1_link = driver.find_element_by_css_selector('#DEFAULT0 > table > tbody > tr:nth-child(1) > td:nth-child(4) > a > img')
+        search_miniart1 = search_miniart1_link.get_attribute('src')
+        print(search_miniart1)
+    except:
+        search_miniart1 = False
+    #세부정보 링크 따기
+    try:
+        info1_link = driver.find_element_by_css_selector('#DEFAULT0 > table > tbody > tr:nth-child(1) > td:nth-child(5) > a')
+        info1 = info1_link.get_attribute('href')
+    except:
+        info1 = False
+    print(info1)
+##################
+    #검색결과 2위 따오기 
+
+    try: 
+        search_music2_link = driver.find_element_by_css_selector('#DEFAULT0 > table > tbody > tr:nth-child(2) > th > p > a')
+        search_music2 = search_music2_link.text
+        print(search_music2)
+    except:
+        search_music2 = False
+        search_album2 = False
+        search_artist2 = False
+        search_miniart2 = False
+        info2 = False
+        search_music3 = False
+        search_album3 = False
+        search_artist3 = False
+        search_miniart3 = False
+        info3 = False
+        driver.quit()
+        
+    #앨범 이름 따오기
+    try:
+        search_album2_link = driver.find_element_by_css_selector('#DEFAULT0 > table > tbody > tr:nth-child(2) > td:nth-child(8) > a')
+        search_album2 = search_album2_link.text
+        print(search_album2)
+    except:
+        search_album2 = False
+    #아티스트 이름 따오기
+    try: 
+        search_artist2_link = driver.find_element_by_css_selector('#DEFAULT0 > table > tbody > tr:nth-child(2) > td:nth-child(7) > p > a')
+        search_artist2 = search_artist2_link.text
+        print(search_artist2)
+    except:
+        search_artist2 = False
+    #미리보기 앨범아트 따오기
+    try:
+        search_miniart2_link = driver.find_element_by_css_selector('#DEFAULT0 > table > tbody > tr:nth-child(2) > td:nth-child(4) > a > img')
+        search_miniart2 = search_miniart2_link.get_attribute('src')
+        print(search_miniart2)
+    except:
+        search_miniart2 = False
+    #세부정보 링크 따기
+    try:
+        info2_link = driver.find_element_by_css_selector('#DEFAULT0 > table > tbody > tr:nth-child(2) > td:nth-child(5) > a')
+        info2 = info2_link.get_attribute('href')
+    except:
+        info2 = False
+    print(info2)
+    
+##################
+    #검색결과 3위 따오기
+    try: 
+        search_music3_link = driver.find_element_by_css_selector('#DEFAULT0 > table > tbody > tr:nth-child(3) > th > p > a')
+        search_music3 = search_music3_link.text
+        print(search_music3)
+    except:
+        search_music3 = False
+        search_album3 = False
+        search_artist3 = False
+        search_miniart3 = False
+        info3 = False
+        driver.quit()
+    #앨범 이름 따오기
+    try:
+        search_album3_link = driver.find_element_by_css_selector('#DEFAULT0 > table > tbody > tr:nth-child(3) > td:nth-child(8) > a')
+        search_album3 = search_album3_link.text
+        print(search_album3)
+    except:
+        search_album3 = False
+    #아티스트 이름 따오기
+    try: 
+        search_artist3_link = driver.find_element_by_css_selector('#DEFAULT0 > table > tbody > tr:nth-child(3) > td:nth-child(7) > p > a')
+        search_artist3 = search_artist3_link.text
+        print(search_artist3)
+    except:
+        search_artist3 = False
+    #미리보기 앨범아트 따오기
+    try:
+        search_miniart3_link = driver.find_element_by_css_selector('#DEFAULT0 > table > tbody > tr:nth-child(3) > td:nth-child(4) > a > img')
+        search_miniart3 = search_miniart3_link.get_attribute('src')
+        print(search_miniart3)
+    except:
+        search_miniart3 = False
+    #세부정보 링크 따기
+    try:
+        info3_link = driver.find_element_by_css_selector('#DEFAULT0 > table > tbody > tr:nth-child(3) > td:nth-child(5) > a')
+        info3 = info3_link.get_attribute('href')
+    except:
+        info3 = False
+        
+    driver.quit()    
+    
+###################################################################값들 session으로 다음 결과창으로 넘겨주기
+    context={'search_music1' : search_music1, 'search_album1' : search_album1, 'search_artist1' : search_artist1, 'search_miniart1' : search_miniart1, 'info1' : info1,
+                        'search_music2' : search_music2, 'search_album2' : search_album2, 'search_artist2' : search_artist2, 'search_miniart2' : search_miniart2, 'info2' : info2,
+                        'search_music3' : search_music3, 'search_album3' : search_album3, 'search_artist3' : search_artist3, 'search_miniart3' : search_miniart3, 'info3' : info3,
+                        'music' : music3, 'singer' : singer2 }
+    
+    search_result = {'search_music1' : search_music1, 'search_album1' : search_album1, 'search_artist1' : search_artist1, 'search_miniart1' : search_miniart1, 
+                        'search_music2' : search_music2, 'search_album2' : search_album2, 'search_artist2' : search_artist2, 'search_miniart2' : search_miniart2,
+                        'search_music3' : search_music3, 'search_album3' : search_album3, 'search_artist3' : search_artist3, 'search_miniart3' : search_miniart3 }
+    request.session['search_result'] = search_result
+    return render(request, 'musictest/new4_search.html', context)
+    
+    
+###########첫번째 꺼 클릭했을때#################
+@login_required
+def search_E_A(request):
+    artist_official = request.GET['artist_official']
+    music_official = request.GET['music_official']
+    album_official = request.GET['album_official']
+    info_official = request.GET['info_official']
+    context = {'artist_official':artist_official, 'music_official' : music_official, 'album_official' : album_official, 'info_official':info_official}
+    return render(request, 'musictest/new5_search.html',context)
+    
+@login_required
+def search_F(request):
+    artist_official = request.GET['artist_official']
+    music_official = request.GET['music_official']
+    album_official = request.GET['album_official']
+    info_official = request.GET['info_official']
+    args = { "no_encode":False, 'output_ext': 'mp3', 'output_file': f'./songs/{artist_official}-{music_official}.mp3', 'quality': 'best', 'overwrite' : 'skip'
+             } #검색옵션, 다운로드 mp3형식, 다운로드 파일명은 가수 - 타이틀.mp3
+    try:
+        spotdl_handler = Spotdl(args) #spotdl.handler에 검색옵션 저장
+        spotdl_handler.download_track(f'{artist_official} {music_official}') #'가수 타이틀' 로 노래 검색 후 다운로드
+    except:
+        print('노래가 검색되지 않았습니다.')
+        return redirect('musictest:index')
+    song_official = f'./songs/{artist_official}-{music_official}.mp3'
+    
+    if album_official == "None":
+        album_official = False
+        info_official = False
+        albumart_official = False
+        lyric_official = False
+    else:
+###############################################정보 다 따오자 
+    # Linux 서버에서는 GUI Browser를 구동할 수 없기 때문에 Headless Mode로 사용해야 한다.
+        chrome_options = webdriver.ChromeOptions()
+        # 크롬 헤드리스 모드 사용 위해 disable-gpu setting
+        chrome_options.add_argument('--disable-gpu')
+        # 크롬 헤드리스 모드 사용 위해 headless setting
+        chrome_options.add_argument('--headless')
+        
+        
+        #벅스 내에서 노래 검색
+        driver = webdriver.Chrome(chrome_options=chrome_options)
+        driver.implicitly_wait(3)
+        driver.get(info_official)
+        print('벅스 검색 성공')
+        
+        #앨범아트 따오기
+        albumartlink = driver.find_element_by_css_selector('#container > section.sectionPadding.summaryInfo.summaryTrack > div > div.basicInfo > div > ul > li > a > img')
+        albumart_official = albumartlink.get_attribute('src')
+        print(albumart_official)
+    
+        #가사 따오기 제발 진짜
+        try:
+            lyriclink = driver.find_element_by_css_selector('#container > section.sectionPadding.contents.lyrics > div > div > xmp')
+            lyric_official = lyriclink.text
+            print(lyric_official)
+        except:
+            lyric_official = '가사 정보가 없거나, 19세 이상 이용가능 음악입니다'
+            print(lyric_official)
+        
+    context = {'artist_official':artist_official, 'music_official' : music_official, 'album_official' : album_official, 'info_official':info_official, 'song_official' : song_official, 'lyric_official' : lyric_official, 'albumart_official' : albumart_official}
+    return render (request, 'musictest/new6_search.html', context)
+
+@login_required    
+def write_A(request):
+    artist_official = request.GET['artist_official']
+    music_official = request.GET['music_official']
+    album_official = request.GET['album_official']
+    lyric_official = request.GET['lyric_official']
+    albumart_official = request.GET['albumart_official']
+    song_official = f'./songs/{artist_official}-{music_official}.mp3'
+    context = {'artist_official':artist_official, 'music_official' : music_official, 'album_official' : album_official, 'song_official' : song_official, 'lyric_official' : lyric_official, 'albumart_official' : albumart_official} #info링크는 더이상 필요없으므로 삭제
+    return render (request, 'muscitest/new7_write.html', context)

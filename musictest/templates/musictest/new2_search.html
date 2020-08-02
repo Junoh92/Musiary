@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'posts/style.css' %}" type="text/css" />
+{% endblock %} 
+
+{% block content %}
+
+<div class = "container">
+    
+<h1>Posts</h1>
+
+<h2> 가수 이름이 어떻게 되나요? </h2>
+
+<form action="{% url 'musictest:new3_search' %}" method ="GET">
+    <div class="form-group">
+        <input type = 'text'  name='singer1'>
+        <input type = 'hidden' name='music2' value="{{music1}}">
+    </div>
+<br>
+<button type="submit" class="btn btn-primary mb-4"> Search </button>
+</form>
+</div>
+
+{% endblock %}

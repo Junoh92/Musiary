@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'posts/style.css' %}" type="text/css" />
+{% endblock %} 
+
+{% block content %}
+<h1> Searching... </h1>
+<p> 잠시만 기다려줘봐요 노래좀 검색할게여 </p>
+
+<form name='music_search' action="{% url 'musictest:new4_search' %}" method ="GET">
+    <div class="form-group">
+        <input type = 'hidden'  name='singer2' value ="{{singer1}}">
+        <input type = 'hidden' name='music3' value="{{music2}}">
+    </div>
+<br>
+</form>
+
+<script>
+    document.music_search.submit();
+</script>
+
+
+{% endblock %}

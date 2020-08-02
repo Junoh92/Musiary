@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'posts/style.css' %}" type="text/css" />
+{% endblock %} 
+
+{% block content %}
+<h1> Search Result </h1>
+{% if search_music1 == "곡 정보가 없습니다." %}
+<h1> 벅스에 곡 정보가 없으나 , spotify를 통해 노래를 찾아볼 수는 있습니다. 그래도 검색해볼까요? </h1>
+<p> (다만, 앨범아트나 가사와 같은 정보들은 제공되지 않습니다) </p>
+    <form action="{% url 'musictest:new5_search' %}" method ="GET">
+        <input type = 'hidden'  name='artist_official' value ="{{singer}}">
+        <input type = 'hidden' name='music_official' value="{{music}}">
+        <input type = 'hidden'  name='album_official' value ="None">
+        <input type = 'hidden' name='info_official' value = "None">
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary mb-4"> 네 </button>
+    </form>
+    <form action="{% url 'musictest:new1_search' %}">
+        <button type="submit" class="btn btn-primary mb-4"> 아니오 </button>
+    </form>
+{% else %}
+<div>
+    <p>{{search_music1}} {{search_album1}} {{search_artist1}}</p>
+    <img src = '{{search_miniart1}}' />
+    <form action="{% url 'musictest:new5_search' %}" method ="GET">
+        <input type = 'hidden'  name='artist_official' value ="{{search_artist1}}">
+        <input type = 'hidden' name='music_official' value="{{search_music1}}">
+        <input type = 'hidden'  name='album_official' value ="{{search_album1}}">
+        <input type = 'hidden' name='info_official' value = "{{info1}}">
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary mb-4"> Click </button>
+    </form>
+</div>
+{% endif %}
+
+{% if search_music2 %}
+<div>
+    <p>{{search_music2}} {{search_album2}} {{search_artist2}}</p>
+    <img src = '{{search_miniart2}}' />
+    <form action="{% url 'musictest:new5_search' %}" method ="GET">
+        <input type = 'hidden'  name='artist_official' value ="{{search_artist2}}">
+        <input type = 'hidden' name='music_official' value="{{search_music2}}">
+        <input type = 'hidden'  name='album_official' value ="{{search_album2}}">
+        <input type = 'hidden' name='info_official' value = "{{info2}}">
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary mb-4"> Click </button>
+    </form>
+</div>
+{% endif %}
+{% if search_music3 %}
+<div>
+    <p> {{search_music3}} {{search_album3}} {{search_artist3}}</p>
+    <img src = '{{search_miniart3}}' />
+    <form action="{% url 'musictest:new5_search' %}" method ="GET">
+        <input type = 'hidden'  name='artist_official' value ="{{search_artist3}}">
+        <input type = 'hidden' name='music_official' value="{{search_music3}}">
+        <input type = 'hidden'  name='album_official' value ="{{search_album3}}">
+        <input type = 'hidden' name='info_official' value = "{{info3}}">
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary mb-4"> Click </button>
+    </form>
+</div>
+{% endif %}
+<br><br><br>
+{% if search_music1 %}
+<h2> 혹시 찾는 곡이 없어여? ㅠ</h2>
+    <form action="{% url 'musictest:new1_search' %}">
+        <button type="submit" class="btn btn-primary mb-4"> 여기없어영 ㅠㅠ </button>
+    </form>
+{% else %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'posts/style.css' %}" type="text/css" />
+{% endblock %} 
+
+{% block content %}
+<h1> Searching... </h1>
+<p> 잠시만 기다려줘봐요 노래좀 다운받을게여 </p>
+
+<form name='download_search' action="{% url 'musictest:new6_search' %}" method ="GET">
+    <div class="form-group">
+        <input type = 'hidden'  name='artist_official' value ="{{artist_official}}">
+        <input type = 'hidden' name='music_official' value="{{music_official}}">
+        <input type = 'hidden'  name='album_official' value ="{{album_official}}">
+        <input type = 'hidden'  name='info_official' value ="{{info_official}}">
+    </div>
+<br>
+</form>
+
+<script>
+    document.download_search.submit();
+</script>
+
+
+{% endblock %}
