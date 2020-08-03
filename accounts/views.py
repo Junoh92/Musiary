@@ -11,10 +11,10 @@ def sign_up(request):
                 request.POST['password'] and
                 request.POST['password'] == request.POST['password_check']):
                     
-            # if request.POST['username'] is not None:
-            #     context['error']='이미 존재하는 아이디입니다'
+            if request.POST['username'] is not None:
+                context['error']='이미 존재하는 아이디입니다'
             
-            # else:
+            else:
                 new_user = User.objects.create_user(
                 username=request.POST['username'],
                 password=request.POST['password'],

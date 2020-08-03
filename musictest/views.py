@@ -466,41 +466,43 @@ def search_F(request):
 
 @login_required    
 def write_A(request):
-    artist_official = request.GET['artist_official']
-    music_official = request.GET['music_official']
-    album_official = request.GET['album_official']
-    lyric_official = request.GET['lyric_official']
-    albumart_official = request.GET['albumart_official']
+    artist_official = request.POST['artist_official']
+    music_official = request.POST['music_official']
+    album_official = request.POST['album_official']
+    lyric_official = request.POST['lyric_official']
+    albumart_official = request.POST['albumart_official']
     song_official = f'./songs/{artist_official}-{music_official}.mp3'
-    context = {'artist_official':artist_official, 'music_official' : music_official, 'album_official' : album_official, 'song_official' : song_official, 'lyric_official' : lyric_official, 'albumart_official' : albumart_official} #info링크는 더이상 필요없으므로 삭제
-    return render (request, 'muscitest/new7_write.html', context)
+    context = {'artist_official': artist_official, 'music_official' : music_official, 'album_official' : album_official, 'song_official' : song_official, 'lyric_official' : lyric_official, 'albumart_official' : albumart_official} #info링크는 더이상 필요없으므로 삭제
+    return render (request, 'musictest/new7_write.html', context)
     
 @login_required
 def write_B(request):
-    artist_official = request.GET['artist_official']
-    music_official = request.GET['music_official']
-    album_official = request.GET['album_official']
-    lyric_official = request.GET['lyric_official']
-    albumart_official = request.GET['albumart_official']
+    artist_official = request.POST['artist_official']
+    music_official = request.POST['music_official']
+    album_official = request.POST['album_official']
+    lyric_official = request.POST['lyric_official']
+    albumart_official = request.POST['albumart_official']
     song_official = f'./songs/{artist_official}-{music_official}.mp3'
     #사용자가 적은 타이틀 저장
-    title = request.GET['title']
-    context = {'artist_official':artist_official, 'music_official' : music_official, 'album_official' : album_official, 'song_official' : song_official, 'lyric_official' : lyric_official, 'albumart_official' : albumart_official, 'title':title} 
-    return render (request, 'muscitest/new8_write.html', context)
+    title = request.POST['title']
+    context = {'artist_official':artist_official, 'music_official' : music_official, 'album_official' : album_official, 'song_official' : song_official, 'lyric_official' : lyric_official, 'albumart_official' : albumart_official, 
+                'title':title} 
+    return render (request, 'musictest/new8_write.html', context)
     
 @login_required
 def write_C(request):
-    artist_official = request.GET['artist_official']
-    music_official = request.GET['music_official']
-    album_official = request.GET['album_official']
-    lyric_official = request.GET['lyric_official']
-    albumart_official = request.GET['albumart_official']
+    artist_official = request.POST['artist_official']
+    music_official = request.POST['music_official']
+    album_official = request.POST['album_official']
+    lyric_official = request.POST['lyric_official']
+    albumart_official = request.POST['albumart_official']
     song_official = f'./songs/{artist_official}-{music_official}.mp3'
-    title = request.GET['title']
+    title = request.POST['title']
     #사용자가 적은 태그 저장
-    tag = request.GET['tag']
-    context = {'artist_official':artist_official, 'music_official' : music_official, 'album_official' : album_official, 'song_official' : song_official, 'lyric_official' : lyric_official, 'albumart_official' : albumart_official, 'title':title, 'tag':tag} 
-    return render (request, 'muscitest/new8_write.html', context)
+    tag = request.POST['tag']
+    context = {'artist_official':artist_official, 'music_official' : music_official, 'album_official' : album_official, 'song_official' : song_official, 'lyric_official' : lyric_official, 'albumart_official' : albumart_official, 
+                    'title':title, 'tag':tag} 
+    return render (request, 'musictest/new9_write.html', context)
 
 @login_required
 def create_musiary(request):

@@ -10,13 +10,15 @@
 <h1> What Are You Thinking? </h1>
 <h2> Write Your Musiary Title</h2>
 <div>
-    <form  action="{% url 'musictest:new8_write' %}" method ="GET">
-        <input type="text", name="title"/>>
+    <form  action="{% url 'musictest:new8_write' %}" method ="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text", name="title"/>
         <!--밑에는 계속 정보 이어갑니다..-->
         <input type = 'hidden'  name='artist_official' value ="{{artist_official}}">
         <input type = 'hidden' name='music_official' value="{{music_official}}">
         <input type = 'hidden'  name='album_official' value ="{{album_official}}">
-        <input type = 'hidden'  name='info_official' value ="{{info_official}}">
+        <input type = 'hidden'  name='lyric_official' value = "{{lyric_official}}">
+        <input type = 'hidden' name='albumart_official' value = "{{albumart_official}}">
         <button type="submit" class="btn btn-primary mb-4"> Next </button>
     </form>
 </div>

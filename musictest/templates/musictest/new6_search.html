@@ -32,7 +32,8 @@
 <br>
 <br>
 <h3>찾으시는 곡이 맞나요?</h3>
-    <form action="{% url 'musictest:new7_write' %}" method ="GET">
+    <form action="{% url 'musictest:new7_write' %}" method ="POST" enctype="multipart/form-data">
+        {% csrf_token %}
         <input type = 'hidden'  name='artist_official' value ="{{artist_official}}">
         <input type = 'hidden' name='music_official' value="{{music_official}}">
         <input type = 'hidden'  name='album_official' value ="{{album_official}}">

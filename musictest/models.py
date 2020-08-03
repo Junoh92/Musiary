@@ -10,7 +10,7 @@ class Post(models.Model):
     music_official = models.CharField(max_length=50,null=True)
     album_official = models.CharField(max_length=50,null=True)
     lyric_official = models.TextField() 
-    albumart_official = models.URLField
+    albumart_official = models.CharField(max_length=200,null=True)
     song_official = models.FileField(null=True)
     title = models.CharField(max_length=200,null=True)
     tag = models.CharField(max_length=200,null=True)
