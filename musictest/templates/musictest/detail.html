@@ -3,38 +3,25 @@
 {% load static %}
 
 {% block style %}
-    <link rel="stylesheet" href="{% static 'posts/style.css' %}" type="text/css" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'musictest/audioplayer.css' %}" type="text/css" />
 {% endblock %} 
-
 {% block content %}
-
-    <h1></h1>
-    {% if post %}
-    <h2> Author </h2>
+{% if post %}
+<br><br><br><br><br><br><br>
     <p> {{ post.user }}</p>
-    
-    {% if post.image %}
-    <div>
-        <h2>Photo</h2>
-        <img src="{{ post.image.url }}"></img>
-    </div>
-    {% endif %}
-    <h2> Albumart </h2>
+<br><br><br>
+
     <img src = "{{post.albumart_official}}" />
     
-    <h2> Music </h2>
-            <div>
-                <audio controls="controls">
-                  <source src="{{ post.song_official.url }}" type="audio/mpeg"  autostart="true" />
-                Your browser does not support the audio element.
-                </audio>
-            </div>
+<br>
+      <div id="wrapper" style="margin-top:100px">
+      		      <audio preload="auto" controls>
+      					<source src="https://tympanus.net/Development/AudioPlayer/audio/BlueDucks_FourFlossFiveSix.mp3">
+      	</audio>
+      </div>
     <p> {{ post.music_official}} </p>
-    
-    <h2> Artist </h2>
     <p>{{ post.artist_official }}</p>
-    
-    <h2> Album </h2>
     <p>{{ post.album_official }}</p>
     
     <h1> Title </h1>
@@ -51,14 +38,11 @@
     <p>No post</p>
     {% endif %}
     
-    <div>
-        좋아요 수 : {{ post.liked_users.count }}
-    </div>
     {% if user.is_authenticated %}
     {% if user in post.liked_users.all %}
         <form action = "{% url 'musictest:like' post.id %}" method = "POST">
             {% csrf_token %}
-            <button type = "submit" class = "btn btn-secondary">Like!</button>
+            <button type = "submit" class = "btn btn-secondary">Like!</button> {{ post.liked_users.count }} liked
         </form>
     {% else %}
         <form action = "{% url 'musictest:like' post.id %}" method = "POST">
@@ -73,5 +57,13 @@
     <a href="{% url 'musictest:edit' post.id %}">Edit</a>
     <a href="{% url 'musictest:delete' post.id %}">Delete</a>
     {% endif %}
+    
+ 		<script src="{% static 'musictest/jquery.js' %}"></script>
+		<script src="{% static 'musictest/audioplayer.js' %}"></script>
+		<script>
+			$(function() {
+				$('audio').audioPlayer();
+			});
+		</script>
  
 {% endblock %}

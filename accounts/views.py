@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
+from .models import Profile
+
 
 # Create your views here.
 def sign_up(request):
@@ -11,20 +13,23 @@ def sign_up(request):
                 request.POST['password'] and
                 request.POST['password'] == request.POST['password_check']):
                     
-            if request.POST['username'] is not None:
-                context['error']='이미 존재하는 아이디입니다'
-            
+            if User.objects.filter(username = request.POST['username']).exists() == True:
+                context['error'] = '아이디가 이미 존재합니다'
+                
             else:
                 new_user = User.objects.create_user(
                 username=request.POST['username'],
                 password=request.POST['password'],
                 )
-            
+                user_img = None
+                if 'user_img' in request.FILES:
+                    user_img = request.FILES['user_img']
+                profile = Profile(user=new_user, name=request.POST['name'], nickname=request.POST['nickname'], email=request.POST['email'], user_img = user_img)
+                profile.save()
                 auth.login(request, new_user)
                 return redirect('musictest:index')
-        
         else:
-            context['error']='아이디와 비밀번호를 다시 확인해주세영'
+            context['error']='비밀번호가 맞지 않습니다'
             
     # GET 방식으로 request 들어왔을 경우
     return render(request, 'accounts/sign_up.html', context)

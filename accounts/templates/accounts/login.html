@@ -1,38 +1,45 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>뮤지어리 로그인</title>
+        <title>Musiary main</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'accounts/style.css' %}" type="text/css" />
     </head>
-<div class = 'container'>
+<body class="blackbody">
+<div class = 'container' id = 'background'>
         {% if error %}
         <div class = 'alert alert-danger' roled='alert'>
             {{ error }}
         </div>
     {% endif %}
-    
+    <br><br><br><br><br>
     <form method = "POST" action = "{% url 'accounts:login' %}">
         {% csrf_token %}
-        <h1>Login</h1>
+        <h1><font color=white> Wellcome to Musiary </font></h1><br><br><br><br>
+        <h2><font color=white>Login</font></h2>
         
-        <div class="form-group">
-            <label for='username'>Your ID</label>
+        <div class="form-group" position = 'middle'>
+            <label for='username'><font color=white>Your ID</font></label><br>
             <input type="text" id="username" name="username" placeholder="Your ID">
         </div>
         
-        <div class="form-group">
-            <label for="password">Password</label>
+        <div class="form-group"position = 'middle'>
+            <label for="password"><font color=white>Password</font></label><br>
             <input type="password" id="password" name="password" placeholder="Password">
         </div>
         
-        <button type ="submit" class="btn btn-primary">Login</button>
+        <button type ="submit" class="btn btn-info" position = 'middle'>Login</button>
         <br>
         <div class = 'container' >
-            <p> 아직 회원이 아니세요? </p>
+            <p> <font color=white>아직 회원이 아니세요?</font> </p>
             <a href = "{% url 'accounts:sign_up' %}"> 회원가입 하러가기</a>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         </div>
         
     </form>
 </div>
+</body>
 </html>
         
