@@ -5,6 +5,7 @@ app_name='musictest'
 urlpatterns = [
     path('', views.index, name='index'),
     path('<int:post_id>/', views.detail, name='detail'),
+    path('<int:post_id>/2', views.detail_test, name='detail_test'),
     path('create/', views.create, name="create"),
     # path('search/', views.search, name='search'),
     path('new/', views.new, name="new"),

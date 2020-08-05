@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block scripts %}
+{% endblock %}
+{% block style %}
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'musictest/detail_test.css' %}" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" />
+{% endblock %} 
+{% block content %}
+{% if post %}
+<br><br><br>
+    <p> {{ post.user }}</p>
+<br><br><br>
+<div class="wrapper">
+  <div class="player__container">
+    <div class="player__body">
+      <div class="body__cover">
+        <img src="{{post.albumart_official}}" alt="Album cover" />
+        <div class="range"></div>
+      </div>
+      
+      <div class="body__info">
+        <div class="info__album">{{post.album_official}}</div>
+
+        <div class="info__song">{{post.music_official}}</div>
+
+        <div class="info__artist">{{post.artist_official}}</div>
+      </div>
+
+      <div class="body__buttons">
+        <ul class="list list--buttons">
+          <li><a href="#" class="list__link"><i class="fa fa-step-backward"></i></a></li>
+
+          <li><a href="#" class="list__link"><i class="fa fa-play"></i></a></li>
+
+          <li><a href="#" class="list__link"><i class="fa fa-step-forward"></i></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="player__footer">
+      <ul class="list list--footer">
+        <li><a href="#" class="list__link"><i class="fa fa-heart-o"></i></a></li>
+        
+        <li><a href="#" class="list__link"><i class="fa fa-random"></i></a></li>
+        
+        <li><a href="#" class="list__link"><i class="fa fa-undo"></i></a></li>
+        
+        <li><a href="#" class="list__link"><i class="fa fa-ellipsis-h"></i></a></li>
+      </ul>
+    </div>
+  </div>
+  <h1> Title </h1>
+    <h2>{{post.title}}</h2> <br><br><br>
+    <h2> Tag </h2>
+    <p>{{post.tag}}</p> <br><br><br>
+    <h2> Body </h2>
+    <p>{{post.body}}</p> <br><br><br>
+    <h2> Lyric </h2>
+    <p>{{ post.lyric_official }}</p> <br><br><br>
+    <h2> Created_at </h2> 
+    <p>{{post.created_at}}</p> <br><br><br>
+    {% else %}
+    <p>No post</p>
+    {% endif %}
+    
+    {% if user.is_authenticated %}
+    {% if user in post.liked_users.all %}
+        <form action = "{% url 'musictest:like' post.id %}" method = "POST">
+            {% csrf_token %}
+            <button type = "submit" class = "btn btn-secondary">Like!</button> {{ post.liked_users.count }} liked
+        </form>
+    {% else %}
+        <form action = "{% url 'musictest:like' post.id %}" method = "POST">
+            {% csrf_token %}
+            <button type = "submit" class = "btn btn-primary">Like!</button>
+        </form>
+    {% endif %}
+    {% endif %}
+   
+        <a href="{% url 'musictest:index' %}">list</a>
+    {% if user == post.user %}
+    <a href="{% url 'musictest:edit' post.id %}">Edit</a>
+    <a href="{% url 'musictest:delete' post.id %}">Delete</a>
+    {% endif %}
+</div>
+
+
+    
+{% endblock %}

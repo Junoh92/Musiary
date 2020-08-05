@@ -17,16 +17,8 @@ from django.core.files import File
 from mutagen import File
 
 def index(request):
-    print (' api  호출호출')
-    dog_api_response=requests.get('https://dog.ceo/api/breeds/image/random')
-    print (dog_api_response)
-    dog_api_response_dictionary = dog_api_response.json()
     posts = Post.objects.all()
-    dog=None
-    if dog_api_response_dictionary['status']=='success':
-        dog = dog_api_response_dictionary['message']
-    context = {'posts': posts,
-               'dog': dog}
+    context = {'posts': posts,              }
     return render (request, 'musictest/index.html', context)
     
 def detail(request, post_id):
@@ -447,11 +439,6 @@ def search_F(request):
         driver.get(info_official)
         print('벅스 검색 성공')
         
-        #앨범아트 따오기
-        albumartlink = driver.find_element_by_css_selector('#container > section.sectionPadding.summaryInfo.summaryTrack > div > div.basicInfo > div > ul > li > a > img')
-        albumart_official = albumartlink.get_attribute('src')
-        print(albumart_official)
-    
         #가사 따오기 제발 진짜
         try:
             lyriclink = driver.find_element_by_css_selector('#container > section.sectionPadding.contents.lyrics > div > div > xmp')
@@ -460,6 +447,16 @@ def search_F(request):
         except:
             lyric_official = '가사 정보가 없거나, 19세 이상 이용가능 음악입니다'
             print(lyric_official)
+            
+        #앨범아트 따오기
+        albumartlink = driver.find_element_by_css_selector('#container > section.sectionPadding.summaryInfo.summaryTrack > div > div.basicInfo > div > ul > li > a')
+        albumartlink.click()
+        userName = driver.find_element_by_css_selector("#container > section.sectionPadding.summaryInfo.summaryAlbum > div > div.basicInfo > div > ul > li > a")
+        driver.execute_script("arguments[0].click();", userName)
+        albumart = driver.find_element_by_css_selector('#originalPhotoViewBtn > img')
+        albumart_official = albumart.get_attribute('src')
+        print(albumart_official)
+            
         
     context = {'artist_official':artist_official, 'music_official' : music_official, 'album_official' : album_official, 'info_official':info_official, 'song_official' : song_official, 'lyric_official' : lyric_official, 'albumart_official' : albumart_official}
     return render (request, 'musictest/new6_search.html', context)
@@ -521,3 +518,9 @@ def create_musiary(request):
                 song_official = song_official, title = title, tag=tag, body=body, created_at=timezone.now() )#post에 저장
     post.save()
     return redirect('musictest:detail', post_id=post.id)
+
+@login_required
+def detail_test(request, post_id):
+    post = Post.objects.get(id=post_id)
+    context = {'post':post}
+    return render(request, 'musictest/detail_test.html', context)
