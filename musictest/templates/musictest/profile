@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'posts/style.css' %}" type="text/css" />
+{% endblock %} 
+
+{% block content %}
+<div class = "container" >
+    <h1>My Page</h1>
+    
+    <!-- 본인 페이지 접속 시, 게시글 -->
+     {% if user.is_authenticated %}
+        {% if user == posts.0.user %}
+        <div>Follower : {{ post.followers }}</div>
+        <h2> ID: {{ posts.0.user }} </h2>
+        
+            {% for post in posts %}
+                {% if post %}
+                    <h3>Music</h3>
+                    <p><a href="{% url 'musictest:detail' post.id %}">{{ post.music_official }}</a></p>
+                {% else %}
+                    <p>작성한 음악일기가 없습니다(내건데 없어)</p>
+                    <a href="{% url 'musictest:new7_write' %}">새 일기 작성하기</a>
+                {% endif %}
+            {% endfor %}
+            
+        <!-- 타 사용자 페이지 접속 시, 팔로우+게시글 -->    
+        {% else %}
+        <div>Follower : {{ post.followers }}</div>
+            {% if user in posts.followers.all %}
+                <form action="{% url 'musictest:followers' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Unfollow</button>
+                </form>
+            {% else %}
+                <form action="{% url 'musictest:followers' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-secondary">Follow</button>
+                </form>
+            {% endif %}
+            
+        <h2> ID: {{ posts.0.user }} </h2>   
+            {% for post in posts %}
+                {% if post %}
+                    <h3>Music</h3>
+                    <p><a href="{% url 'musictest:detail' post.id %}">{{ post.music_official }}</a></p>
+                {% else %}
+                    <p>작성한 음악일기가 없습니다(남의거 없어)</p>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        
+    {% endif %}
+    
+    
+</div>
+{% endblock %}
