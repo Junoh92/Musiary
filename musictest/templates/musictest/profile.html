@@ -28,7 +28,7 @@
             
         <!-- 타 사용자 페이지 접속 시, 팔로우+게시글 -->    
         {% else %}
-        <div>Follower : {{ post.followers }}</div>
+        <div>Follower : {{ post.followers }}</div> 
             {% if user in posts.followers.all %}
                 <form action="{% url 'musictest:followers' %}" method="POST">
                     {% csrf_token %}
