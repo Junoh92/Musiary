@@ -16,6 +16,8 @@ from django.core.files import File
 
 from mutagen import File
 
+from django.contrib.auth.models import User
+
 def index(request):
     posts = Post.objects.all()
     context = {'posts': posts,              }
@@ -524,3 +526,38 @@ def detail_test(request, post_id):
     post = Post.objects.get(id=post_id)
     context = {'post':post}
     return render(request, 'musictest/detail_test.html', context)
+
+# Profile 
+def profile(request, username):
+    post_id = request.user
+    user = User.objects.get(username=username)
+    posts = Post.objects.filter(user=user)
+    context = { 'posts' : posts }
+    return render(request, 'musictest/profile.html', context)
+
+# My Page
+@login_required
+def mypage(request):
+    post_id = request.user
+    posts = Post.objects.filter(user=post_id)
+    context = { 'posts' : posts }
+    return render(request, 'musictest/mypage.html', context)
+
+
+# Follower/Following
+def followers(request, post_id):
+    post_id = request.user
+    if request.method == 'POST':
+        try:
+            posts = Post.objects.filter(user=post_id)
+            
+            if request.user in posts.followers.all():
+                posts.followers.remove(request.user)
+            else:
+                posts.followers.add(request.user)
+                
+            return redirect('musictest:profile')
+        except Post.DoesNotExist:
+            pass
+        
+    return redirect('musictest:profile')
