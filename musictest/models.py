@@ -18,6 +18,8 @@ class Post(models.Model):
     image = models.ImageField(upload_to='musictest', null=True)
     created_at = models.DateTimeField()
     liked_users = models.ManyToManyField(User, related_name='liked_posts')
+    followers = models.ManyToManyField(User, related_name='followers')
+    
     
     def __str__(self):
         if self.user:
