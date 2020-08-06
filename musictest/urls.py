@@ -28,4 +28,8 @@ urlpatterns = [
     # path('search_result_b/', views.search_E_B, name='new5_searchB'),
     # path('search_result_c/', views.search_E_C, name='new5_searchC'),
     # path('test/', views.test, name ='test'),
+    
+    path('profile/<username>/', views.profile, name='profile'),
+    path('mypage', views.mypage, name='mypage'),
+    path('followers/', views.followers, name='followers'),
     ]
