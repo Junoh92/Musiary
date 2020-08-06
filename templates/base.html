@@ -16,7 +16,9 @@
                     {% csrf_token %}
                     
                     {{ user.get_username }}님 환영합니다.
-                    <button type="button" class="btn btn-info">My Page</button>
+                    <a href="{% url 'musictest:mypage' %}">
+                        <button type="button" class="btn btn-info">My Page</button>
+                    </a>
                     <button type="submit" class="btn btn-info">LOGOUT</button>
                 </form>
             </div>
