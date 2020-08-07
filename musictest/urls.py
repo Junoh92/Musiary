@@ -31,5 +31,5 @@ urlpatterns = [
     
     path('profile/<username>/', views.profile, name='profile'),
     path('mypage', views.mypage, name='mypage'),
-    path('followers/', views.followers, name='followers'),
+    path('followers/<int:post_id>/', views.followers, name='followers'),
     ]
