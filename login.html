@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Musiary main</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'accounts/style.css' %}" type="text/css" />
+    </head>
+<body class="blackbody">
+<div class = 'container' id = 'background'>
+        {% if error %}
+        <div class = 'alert alert-danger' roled='alert'>
+            {{ error }}
+        </div>
+    {% endif %}
+    <br><br><br><br><br>
+    <form method = "POST" action = "{% url 'accounts:login' %}">
+        {% csrf_token %}
+        <br><br>
+        <div class="my-box">
+            
+            <img src="{%static 'accounts/logo.png' %}"
+            style="display: block; margin: 0 auto; width:100px; height:45px;"><br>
+            <div>
+                <input class="input-style" type="text" id="username" name="username" placeholder="your ID">
+            </div>
+            <br>
+            <div>
+                <input class="input-style" type="password" id="password" name="password" placeholder="Password">
+            </div>
+            <br>
+            <div class="button">
+                <a type ="submit">Login</button>
+            </div><br>
+            <img src="{%static 'accounts/login.png' %}"
+            style=width:280px;>
+            
+        </div>
+        <br>
+            <div class="my-box">
+            <p> <font color=#4C4C4C position=middle>아직 회원이 아니세요?</font> </p>
+            <a href = "{% url 'accounts:sign_up' %}"> 회원가입</a>
+            </div>
+         
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        
+    </form>
+</div>
+</body>
+</html>
+        
