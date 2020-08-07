@@ -12,7 +12,6 @@
     
     <!-- 본인 페이지 접속 시, 게시글 -->
     {% if user.is_authenticated %}
-        <div>Follower : {{ post.followers }}</div>
         <h2> ID: {{ user.get_username }} </h2>
             <h3>Music</h3>    
             {% if post %}
