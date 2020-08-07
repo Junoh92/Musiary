@@ -8,22 +8,19 @@
 
 {% block content %}
 <div class = "container" >
-    <h1>Profile</h1>
     
-        <!-- 타 사용자 페이지 접속 시, 팔로우+게시글 망할 팔로우가 계속 오류난다-->    
+        {% if user in followers.all %}
+            <form action="{% url 'musictest:followers' posts.0.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Unfollow</button>
+            </form>
+        {% else %}
+            <form action="{% url 'musictest:followers' posts.0.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary">Follow</button>
+            </form>
+        {% endif %}
 
-        <div>Follower : {{ post.followers }}</div> 
-            {% if user in posts.followers.all %}
-                <form action="{% url 'musictest:followers' %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary">Unfollow</button>
-                </form>
-            {% else %}
-                <form action="{% url 'musictest:followers' %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-secondary">Follow</button>
-                </form>
-            {% endif %}
             
         <h2> ID: {{ posts.0.user }} </h2>   
             <h3>Music</h3>
@@ -31,7 +28,7 @@
                 {% if post %}
                     <p><a href="{% url 'musictest:detail' post.id %}">{{ post.music_official }}</a></p>
                 {% else %}
-                    <p>작성한 음악일기가 없습니다(남의거 없어)</p>
+                    <p>작성한 음악일기가 없습니다</p>
                 {% endif %}
             {% endfor %}
 </div>
