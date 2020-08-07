@@ -532,7 +532,8 @@ def profile(request, username):
     post_id = request.user
     user = User.objects.get(username=username)
     posts = Post.objects.filter(user=user)
-    context = { 'posts' : posts }
+    followers = Follow.objects.get(user = user)
+    context = { 'posts' : posts, 'followers': followers}
     return render(request, 'musictest/profile.html', context)
 
 # My Page
@@ -543,21 +544,19 @@ def mypage(request):
     context = { 'posts' : posts }
     return render(request, 'musictest/mypage.html', context)
 
-
 # Follower/Following
 def followers(request, post_id):
-    post_id = request.user
+    post = Post.objects.get(id=post_id)
+    post_user = post.user
     if request.method == 'POST':
         try:
-            posts = Post.objects.filter(user=post_id)
-            
-            if request.user in posts.followers.all():
-                posts.followers.remove(request.user)
+            if request.user in post_user.followers:
+                post_user.followers.remove(request.user)
             else:
-                posts.followers.add(request.user)
+                post_user.followers.add(request.user)
                 
-            return redirect('musictest:profile')
+            return redirect('musictest:profile', post_user)
         except Post.DoesNotExist:
             pass
         
-    return redirect('musictest:profile')
+    return redirect('musictest:profile',post_user)
